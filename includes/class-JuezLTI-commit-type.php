@@ -32,14 +32,14 @@ if(!class_exists('JuezLTI_commit_type'))
         public function init()
         {
             // Inicializa el Post Type
-            $this->create_commit_type();
-            add_action('save_commit', array(&$this, 'save_commit'));
+            $this->create_post_type();
+            add_action('save_post', array(&$this, 'save_post'));
         } // END public function init()
 
         /**
          * Crea el post type
          */
-        public function create_commit_type()
+        public function create_post_type()
         {
             register_post_type(self::COMMIT_TYPE,
                 array(
@@ -60,7 +60,7 @@ if(!class_exists('JuezLTI_commit_type'))
         /**
          * Guarda los meta asociados a una oferta de empleo
          */
-        public function save_commit($commit_id)
+        public function save_post($commit_id)
         {
             // verify if this is an auto save routine.
             // If it is our form has not been submitted, so we dont want to do anything
@@ -81,7 +81,7 @@ if(!class_exists('JuezLTI_commit_type'))
             {
                 return;
             } // if($_POST['post_type'] == self::COMMIT_TYPE && current_user_can('edit_post', $commit_id))
-        } // END public function save_commit($commit_id)
+        } // END public function save_post($commit_id)
 
         /**
          * hook into WP's admin_init action hook

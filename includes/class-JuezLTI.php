@@ -130,6 +130,12 @@ class JuezLTI {
         */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-JuezLTI-commit-type.php';
 
+
+        /**
+        * The class responsible for defining shortcode.
+        */
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-JuezLTI-shortcode.php';
+
 		$this->loader = new JuezLTI_Loader();
 
 	}
@@ -164,6 +170,10 @@ class JuezLTI {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+
+		$plugin_shortcode = new JuezLTI_shortcode();
+
+        $this->loader->add_action( 'init', $plugin_shortcode, 'JuezLTI_shortcode_init' );
 
 	}
 
