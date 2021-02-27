@@ -78,6 +78,7 @@ class JuezLTI {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_commit_types();
 
 	}
 
@@ -121,6 +122,13 @@ class JuezLTI {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-JuezLTI-public.php';
+
+
+		/**
+        * The class responsible for defining new Commit Type
+        * of the plugin.
+        */
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-JuezLTI-commit-type.php';
 
 		$this->loader = new JuezLTI_Loader();
 
@@ -174,6 +182,19 @@ class JuezLTI {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 	}
+
+
+	/**
+    * Register Commit Type.
+    *
+    * @since    1.0.0
+    * @access   private
+    */
+    private function define_commit_types() {
+        // Register custom commit types
+        $Commit_Type = new JuezLTI_commit_type();
+    }
+
 
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
