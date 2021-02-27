@@ -136,6 +136,12 @@ class JuezLTI {
         */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-JuezLTI-shortcode.php';
 
+
+         /**
+         * La clase responsable de la definición del widget de subscripción.
+         */
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-JuezLTIWidgetPiloto.php';
+
 		$this->loader = new JuezLTI_Loader();
 
 	}
@@ -170,6 +176,9 @@ class JuezLTI {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+
+		$this->loader->add_action( 'wp_ajax_nopriv_JuezLTI_Piloto', $plugin_admin, 'JuezLTI_Piloto' );
+        $this->loader->add_action( 'wp_ajax_JuezLTI_Piloto', $plugin_admin, 'JuezLTI_Piloto' );
 
 		$plugin_shortcode = new JuezLTI_shortcode();
 

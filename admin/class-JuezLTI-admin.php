@@ -100,4 +100,57 @@ class JuezLTI_Admin {
 
 	}
 
+
+	public function JuezLTI_Piloto() {
+
+		$response = array(
+            'error' => false,
+        );
+
+		$nombreInstitucion = htmlspecialchars($_POST["nombre"]);
+		$emailInstitucion = htmlspecialchars($_POST["email"]);
+        $url_logotipoInstitucion = htmlspecialchars($_POST["logotipo"]);
+
+        if(!$this->getNombreInstitucion($nombreInstitucion)) {
+            $this->addInstitucion($nombreInstitucion, $emailInstitucion, $url_logotipoInstitucion);
+            $response['message'] = __("Datos de la institucion enviada correctamente");
+        }
+
+        else {
+        	$response['message'] = __("Esta institucion ya se encuentra apuntada");
+        }
+
+        exit(json_encode($response));
+    }
+
+    public function getNombreInstitucion($nombreInstitucion) {
+       global $wpdb;
+
+           $table_name = $wpdb->prefix . "instituciones";
+               // convendría no duplicar este código
+               // Una buena forma sería crear una constante en la clase CarlosIIIJobs con:
+               // const C3JSUSCRIPTORES_TABLE = 'c3jSuscriptores';
+               // y acceder a ella desde este código
+               // $table_name = $wpdb->prefix . CarlosIIIJobs::C3JSUSCRIPTORES_TABLE;
+           $query = "SELECT count(nombre) FROM $table_name WHERE nombre = %s";
+           $existeInstitucion = $wpdb->get_var( $wpdb->prepare($query, $nombreInstitucion)); 
+           return $existeInstitucion > 0;
+    }
+
+    public function addInstitucion($nombreInstitucion, $emailInstitucion, $url_logotipoInstitucion) {
+       global $wpdb;
+
+           $table_name = $wpdb->prefix . "instituciones";
+           $wpdb->insert(
+               $table_name,
+               array(
+               		   'nombre' => $nombreInstitucion,
+                       'email' => $emailInstitucion,
+                       'url_logotipo' => $url_logotipoInstitucion,
+                       'time' => current_time('mysql', 2),
+               ),
+               array('%s')
+           );
+    }
+
 }
